@@ -20,19 +20,20 @@ VARIABILA = 0
 ok_afis = 0
 copie_dp = []  # folosim pentru a vedea daca am ajuns de mai mult de 2 ori in aceeasi situatie gen [0,1,2,0]
 alfabet = [x for x in f.readline().split()]
-for x in cuvant:
-    if x not in alfabet:
-        print("nu este cuvant")
-        exit()  # verifc daca cuvantul contine litere din alfabet
-if cuvant=="λ":
-    print("este cuvant")
-    exit()
+
 
 st_init = int(f.readline())  # starea initiala
 nr_stari_finale = f.readline()  # numarul de stari finale
 lista_stari_finale = []  # lista cu ele
 for x in f.readline().split():
     lista_stari_finale.append(int(x))
+for x in cuvant:
+    if x not in alfabet:
+        print("nu este cuvant")
+        exit()  # verifc daca cuvantul contine litere din alfabet
+if cuvant=="c" and st_init in lista_stari_finale:
+    print("este cuvant")
+    exit()
 lista_stari = []
 for x in range(int(f.readline())):
     lista_stari.append([x])  # o lista ce contine starile de ex [0,1,2,3]
@@ -54,14 +55,14 @@ while DP != []:
     ok = 0
     for x in y:
         if type(x) == tuple:
-            if (str(x[2]) == str(cuvant[indice_cuv]) or str(x[2])=="λ") and x not in lista_vizite_moarte:  # daca suntem pe muchia cu litera corespunzatoare si ea nu a mai fostvizitata
+            if (str(x[2]) == str(cuvant[indice_cuv]) or str(x[2])=="c") and x not in lista_vizite_moarte:  # daca suntem pe muchia cu litera corespunzatoare si ea nu a mai fostvizitata
                 ok = 1
                # if int(x[1]) != VARIABILA:
                   #  lista_vizite_moarte = []
                 DP.append(int(x[1]))
                 print(DP)
                 lista_vizita.append(x)
-                if str(x[2])!="λ":
+                if str(x[2])!="c":
                     indice_cuv += 1
                 if indice_cuv == len(cuvant) and DP[len(DP) - 1] in lista_stari_finale:  # cazul in care este cuvant  si e in stare finala
                     print("este cuvant")
@@ -84,4 +85,28 @@ print("nu e cuvant")
 #print(DP)
 
 # imi intra in bucla pe unele cuvinte
+#c este lambda
 
+"""" 
+input: 
+a b c
+0
+3
+1 3 0
+5
+13
+0 1 a
+0 1 b
+0 4 a
+1 0 b
+1 2 a
+1 4 b
+2 1 b
+2 3 b
+3 2 a
+3 4 c
+4 1 b
+4 2 a
+4 2 b
+4 3 a
+"""
