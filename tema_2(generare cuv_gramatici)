@@ -1,3 +1,18 @@
+"""exemplu input
+a b &-->terminale
+S A B C D-->neterminale
+8-->numar productii
+S & &
+S a A
+S b B
+A a S
+B b b
+B b C
+C b D
+D b B
+D & &
+"""
+
 def increment(j):
     global i
     i += 1
