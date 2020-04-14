@@ -1,7 +1,7 @@
 """exemplu input
 a b &-->terminale
 S A B C D-->neterminale
-8-->numar productii
+9-->numar productii
 S & &
 S a A
 S b B
@@ -12,6 +12,7 @@ C b D
 D b B
 D & &
 """
+
 
 def increment(j):
     global i
@@ -30,8 +31,8 @@ productii = []
 productii.extend(neterminali)
 i = -1
 # verificare daca cuvant are doar alfabet neccesar:
-for x in cuv:
-    if x not in terminali:
+for it in cuvant:
+    if it not in terminali:
         print("nu are literele ok")
         exit()
 productii = list(map(lambda productii: [productii, increment(i)], productii))
@@ -80,10 +81,12 @@ while DP != []:
                     exit()
                 if indice_cuv == len(cuvant) and x[
                     2] not in terminali:  # cazul in care are lungimea cuvantului dar nu e o stare finala
-                    for k in z:
-                        if type(k) == list and k[2] == "&":
-                            print("este cuvant")
-                            exit()
+                    for m in z:
+                        if type(m) == list:
+                            for k in m:
+                                if k == "&":
+                                    print("este cuvant")
+                                    exit()
                     ok = 0
                 break
     if ok1 == 1:
@@ -102,3 +105,4 @@ while DP != []:
         litere.pop()
         indice_cuv -= 1
 print("nu e cuvant")
+
