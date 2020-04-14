@@ -1,0 +1,89 @@
+def increment(j):
+    global i
+    i += 1
+    return i
+
+
+cuvant = input()
+indice_cuv = 0
+f = open("gramatica.txt", "r")
+terminali = f.readline().split()
+neterminali = f.readline().split()
+# S start
+# P multimea de productii
+productii = []
+productii.extend(neterminali)
+i = -1
+# verificare daca cuvant are doar alfabet neccesar:
+for x in cuv:
+    if x not in terminali:
+        print("nu are literele ok")
+        exit()
+productii = list(map(lambda productii: [productii, increment(i)], productii))
+sir = f.readline()
+for i in range(int(sir)):
+    sir2 = f.readline().split()
+    var = -1
+    for y in productii:
+        var += 1
+        if sir2[0] == y[0]:
+            productii[var].append(sir2)
+print(productii)
+DP = [productii[0][1]]
+lista_vizite_moarte = []
+lista_vizita = []
+copie_dp = []
+litere = ["S"]
+while DP != []:
+    y = productii[DP[len(DP) - 1]]
+    ok = 0
+    ok1 = 0
+    if indice_cuv == len(cuvant) - 1:
+        ok1 = 1
+    for x in y:
+        if type(x) == list:
+            if (str(x[1]) == cuvant[indice_cuv] or str(x[1]) == "&") and x not in lista_vizite_moarte and str(x[
+                                                                                                                  2]) not in terminali:  # daca suntem pe muchia cu litera corespunzatoare si ea nu a mai fostvizitata
+                ok = 1
+                # if int(x[1]) != VARIABILA:
+                ok1 = 0
+                #  lista_vizite_moarte = []
+                indice_z = -1
+                if str(x[1]) != "&":
+                    for z in productii:
+                        if z[0] == str(x[2]):
+                            break
+                DP.append(z[1])
+                litere.append(z[0])
+                print(DP)
+                print(litere)
+                lista_vizita.append(x)
+                if str(x[1]) != "&":
+                    indice_cuv += 1
+                if indice_cuv == len(cuvant) and x[2] in terminali:  # cazul in care este cuvant  si e in stare finala
+                    print("este cuvant")
+                    exit()
+                if indice_cuv == len(cuvant) and x[
+                    2] not in terminali:  # cazul in care are lungimea cuvantului dar nu e o stare finala
+                    for k in z:
+                        if type(k) == list and k[2] == "&":
+                            print("este cuvant")
+                            exit()
+                    ok = 0
+                break
+    if ok1 == 1:
+        if (str(x[1]) == cuvant[indice_cuv]):
+            indice_cuv += 1
+            print("e cuvant")
+            exit()
+    if ok == 0:
+        lista_vizite_moarte.append(lista_vizita[len(lista_vizita) - 2])
+        VARIABILA = DP[len(DP) - 1]
+        copie_dp.append(DP)
+        if copie_dp.count(DP) > 100:
+            print("nu e cuvant")
+            exit()
+        DP.pop()
+        litere.pop()
+        indice_cuv -= 1
+print("nu e cuvant")
