@@ -1,0 +1,17 @@
+a b c d
+0
+1
+5
+6
+11
+0 1 a Z AZ
+0 1 a A AA
+0 2 b A &
+1 0 a A AAA
+2 2 b A &
+2 3 c Z DZ
+2 3 c D DD
+2 4 d D &
+3 2 c D D
+4 4 d D &
+4 5 & Z &
